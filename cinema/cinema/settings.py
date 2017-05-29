@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'import_export',
     'movies.apps.MoviesConfig',
 ]
 
@@ -104,6 +105,8 @@ AUTH_PASSWORD_VALIDATORS = [
 REST_FRAMEWORK = {
     'PAGE_SIZE': 10
 }
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
