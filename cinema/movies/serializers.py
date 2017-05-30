@@ -13,10 +13,14 @@ class MovieSerializer(serializers.HyperlinkedModelSerializer):
 # Genre Serializer
 class GenreSerializer(serializers.HyperlinkedModelSerializer):
     movies = serializers.HyperlinkedRelatedField(many=True, view_name='movie-detail', read_only=True)
+    movies_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Genre
-        fields = ('url', 'id', 'name', 'movies')
+        fields = ('url', 'id', 'name', 'movies', 'movies_count')
+
+    def get_movies_count(self, obj):
+        return obj.movies.count()
 
 # User Serializer
 class UserSerializer(serializers.HyperlinkedModelSerializer):
