@@ -6,6 +6,7 @@ from movies import views
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
 router.register(r'movies', views.MovieViewSet)
+router.register(r'genres', views.GenreViewSet)
 router.register(r'users', views.UserViewSet)
 
 schema_view = get_schema_view(title='Pastebin API')
