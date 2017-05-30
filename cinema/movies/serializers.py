@@ -17,7 +17,7 @@ class GenreSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Genre
-        fields = ('url', 'id', 'name', 'movies', 'movies_count')
+        fields = ('url', 'id', 'name', 'movies_count', 'movies')
 
     def get_movies_count(self, obj):
         return obj.movies.count()
