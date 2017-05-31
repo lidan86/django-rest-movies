@@ -8,30 +8,31 @@ from movies.models import Movie, Genre
 from movies.serializers import MovieSerializer, UserSerializer, GenreSerializer
 from tablib import Dataset
 
-class MovieViewSet(viewsets.ModelViewSet):
-    queryset = Movie.objects.all()
-    serializer_class = MovieSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+# User View Set
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
+# Genre View Set
 class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+# Movie View Set
+class MovieViewSet(viewsets.ModelViewSet):
+    queryset = Movie.objects.all()
+    serializer_class = MovieSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
+# The view for the import page on the admin website
 def simple_upload(request):
     if request.method == 'POST':
         movie_resource = MovieResource()
         dataset = Dataset()
         new_movies = request.FILES['myfile']
-
         imported_data = dataset.load(new_movies.read())
         result = movie_resource.import_data(dataset, dry_run=True)  # Test the data import
-
         if not result.has_errors():
             movie_resource.import_data(dataset, dry_run=False)  # Actually import now
-
     return render(request, 'core/simple_upload.html')
