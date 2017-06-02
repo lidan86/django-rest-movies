@@ -13,7 +13,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 # Genre Serializer
 class GenreSerializer(serializers.HyperlinkedModelSerializer):
     movies = serializers.HyperlinkedRelatedField(many=True, view_name='movie-detail', read_only=True)
-    # movies = serializers.ReadOnlyField(read_only=True, source='movie.name')
     movies_count = serializers.SerializerMethodField()
 
     class Meta:

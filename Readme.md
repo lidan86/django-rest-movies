@@ -12,12 +12,13 @@
 # Instructions
 1. To start the API
 Open your terminal
+$ sudo easy_install pip         # instals Pip package manager
+$ pip install virtualenv				# Virtualenv is a tool to create isolated Python environments.
 $ cd movies                     # Browse into the repo root directory
 $ source env/bin/activate       # Launch the environment
 $ cd cinema                     # Browse into the project directory
 $ python manage.py runserver    # Start the server
 2. To be able to make API calls through the terminal
-$ sudo easy_install pip         # instals Pip package manager
 $ pip install httpie            # instals HTTPie package
 3. For API SCHEMA
 Browser: http://localhost:8000/schema/

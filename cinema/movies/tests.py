@@ -71,11 +71,6 @@ class ViewsTest(unittest.TestCase):
         response = self.client.get('/genres/')
         self.assertEqual(response.status_code, 200)
 
-    # def test_genres_detail_with_no_name(self):
-    #     Genre.objects.create()
-    #     response = self.client.get('/genres/1/')
-    #     self.assertEqual(response.status_code, 404)
-
     def test_genres_detail_with_no_content(self):
         response = self.client.get('/genres/2/')
         self.assertEqual(response.status_code, 404)
@@ -101,17 +96,45 @@ class ViewsTest(unittest.TestCase):
         response = self.client.get('/movies/1/')
         self.assertEqual(response.status_code, 200)
 
-    # def test_movies_detail_with_no_title(self):
-    #     Genre.objects.create(name="Fiction")
-    #     fiction = Genre.objects.get(name="Fiction")
-    #     Movie.objects.create(year=2000, genre=fiction)
-    #     response = self.client.get('/movies/1/')
-    #     self.assertEqual(response.content, 200)
-    #     self.assertEqual(response.status_code, 404)
-
 # Testing JSON output
-class AddItemToCollectionTest(TestCase):
+class JSONTests(TestCase):
+    #GET Requests
+    def test_get_users(self):
+        response = self.client.get('/users/')
+        self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(str(response.content, encoding='utf8'),{'count': 0, 'next': None, 'previous': None, 'results': []})
 
+    def test_get_user(self):
+        User.objects.create(username="Maikel", password="password123")
+        response = self.client.get('/users/1/')
+        self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(str(response.content, encoding='utf8'),{'url': 'http://testserver/users/1/', 'id': 1, 'username': 'Maikel'})
+
+    def test_get_genres(self):
+        response = self.client.get('/genres/')
+        self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(str(response.content, encoding='utf8'),{'count': 0, 'next': None, 'previous': None, 'results': []})
+
+    def test_get_genre(self):
+        Genre.objects.create(name="War")
+        response = self.client.get('/genres/1/')
+        self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(str(response.content, encoding='utf8'),{'id': 1, 'movies': [], 'movies_count': 0, 'name': 'War', 'url': 'http://testserver/genres/1/'})
+
+    def test_get_movies(self):
+        response = self.client.get('/movies/')
+        self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(str(response.content, encoding='utf8'),{'count': 0, 'next': None, 'previous': None, 'results': []})
+
+    def test_get_movie(self):
+        Genre.objects.create(name="History")
+        history = Genre.objects.get(name="History")
+        Movie.objects.create(title="WWI", year=2000, genre=history)
+        response = self.client.get('/movies/1/')
+        self.assertEqual(response.status_code, 200)
+        self.assertJSONEqual(str(response.content, encoding='utf8'),{'genre': 'http://testserver/genres/1/', 'id': 1, 'title': 'WWI', 'url': 'http://testserver/movies/1/', 'year': 2000})
+
+    #POST Requests
     def test_add_empty_genre(self):
         response = self.client.post('/genres/')
         self.assertEqual(response.status_code, 403)
@@ -123,24 +146,38 @@ class AddItemToCollectionTest(TestCase):
         self.assertJSONEqual(str(response.content, encoding='utf8'),{'detail': 'Authentication credentials were not provided.'})
 
     # def test_add_genre_with_name_and_authentication(self):
-        # User.objects.create(username="Maikel", password="password123")
-        # maikel = User.objects.get(username="Maikel")
-        # client = APIClient()
-        # client.force_authenticate(user=maikel)
-        # client.login(username='Maikel', password='password123')
-        # response = self.client.post('/genres/', {'name': 'Cartoon'}, format='json')
-        # self.assertEqual(response.status_code, 200)
-        # factory = APIRequestFactory()
-        # request = factory.post('/genres/', {'name': 'Cartoon'})
-        # response = client.get('http://localhost:8000/genres/1/')
-        # response = factory.post('/genres/', {'name': 'Cartoon'})
-        # self.assertJSONEqual(str(response.content, encoding='utf8'),{'status': 'success'})
+    #     User.objects.create(username="Maikel", password="password123")
+    #     maikel = User.objects.get(username="Maikel")
+    #     client = APIClient()
+    #     client.force_authenticate(user=maikel)
+    #     client.login(username='Maikel', password='password123')
+    #     response = self.client.post('/genres/', {'name': 'Cartoon'}, format='json')
+    #     self.assertEqual(response.status_code, 200)
+    #     factory = APIRequestFactory()
+    #     request = factory.post('/genres/', {'name': 'Cartoon'})
+    #     response = client.get('http://localhost:8000/genres/1/')
+    #     response = factory.post('/genres/', {'name': 'Cartoon'})
+    #     self.assertJSONEqual(str(response.content, encoding='utf8'),{'status': 'success'})
 
+    # def _require_login(self):
+    #     self.client.login(username='testuser', password='testing')
 
-
-
-
-
+    # def test_add_genre_with_name_and_authentication(self):
+    #     client = APIClient()
+    #     user = User.objects.create(username="Maikel", password="password123")
+    #     user.save()
+    #     client.login(username="Maikel", password="password123")
+    #     print(user.is_authenticated()) # returns True
+    #     factory = APIRequestFactory()
+    #     data = {'name': 'Cartoon'}
+    #     request = factory.post('/genres/', data, format='json')
+    #     response = client.get('http://localhost:8000/genres/1/')
+    #     self.assertJSONEqual(str(response.content, encoding='utf8'),{'status': 'success'})
+    #     response = self.client.post('/genres/', data, format='json')
+    #     print(response.content)
+    #     self.assertEqual(response.status_code, 201)
+    #     self.assertEqual(Site.objects.count(), 2)
+    #     self.assertEqual(Site.objects.get(name="Another Test Site").count(), 1)
 
     # def test_add_genre(self):
     #     response = self.client.post('/genres/')
