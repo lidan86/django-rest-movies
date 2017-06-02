@@ -1,4 +1,4 @@
-#!/Users/Admin/Desktop/mariana_tek/movies/env/bin/python3.6
+#!/Users/Admin/Desktop/mariana_tek/django-rest-movies/env/bin/python3.6
 
 # -*- coding: utf-8 -*-
 import re

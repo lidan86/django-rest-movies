@@ -15,6 +15,7 @@
   - Open your terminal
   - $ sudo easy_install pip         # installs Pip package manager
   - $ pip install virtualenv				# Virtualenv is a tool to create isolated Python environments.
+  - $ git clone https://github.com/maikelnabil/django-rest-movies.git
   - $ cd django-rest-movies         # Browse into the repo root directory
   - $ source env/bin/activate       # Launch the environment
   - $ cd cinema                     # Browse into the project directory
