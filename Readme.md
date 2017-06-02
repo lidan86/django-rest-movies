@@ -8,49 +8,52 @@
 - The API provides data in two formats: JSON and HTML.
 - Data in the API was provided as a tsv file by Mariana Tek. It was imported to the SQLite database by using the 'import_export' package.
 - The API allows filtering movies by genre. Each genre has a count of movies produced under this genre, and a list of links to these movies instances.
+- There are currently 20 tests in this project testing the models, the views, and the serializers.
 
 # Instructions
 1. To start the API
-- Open your terminal
-- $ sudo easy_install pip         # instals Pip package manager
-- $ pip install virtualenv				# Virtualenv is a tool to create isolated Python environments.
-- $ cd django-rest-movies         # Browse into the repo root directory
-- $ source env/bin/activate       # Launch the environment
-- $ cd cinema                     # Browse into the project directory
-- $ python manage.py runserver    # Start the server
+  - Open your terminal
+  - $ sudo easy_install pip         # installs Pip package manager
+  - $ pip install virtualenv				# Virtualenv is a tool to create isolated Python environments.
+  - $ cd django-rest-movies         # Browse into the repo root directory
+  - $ source env/bin/activate       # Launch the environment
+  - $ cd cinema                     # Browse into the project directory
+  - $ python manage.py runserver    # Start the server
 2. To be able to make API calls through the terminal
-- $ pip install httpie            # instals HTTPie package
+  - $ pip install httpie            # installs HTTPie package
 3. For API SCHEMA
-- Browser: http://localhost:8000/schema/
-- CLI: $ http http://localhost:8000/schema/
+  - Browser: http://localhost:8000/schema/
+  - CLI: $ http http://localhost:8000/schema/
 4. For a list of all users
-- Browser: http://localhost:8000/users/
-- CLI: $ http http://localhost:8000/users/
+  - Browser: http://localhost:8000/users/
+  - CLI: $ http http://localhost:8000/users/
 5. For a list of all genres
-- Browser: http://localhost:8000/genres/
-- CLI: $ http http://localhost:8000/genres/
+  - Browser: http://localhost:8000/genres/
+  - CLI: $ http http://localhost:8000/genres/
 6. For a particular genre
-- Browser: http://localhost:8000/genres/:id/
-- CLI: $ http http://localhost:8000/genres/:id/
+  - Browser: http://localhost:8000/genres/:id/
+  - CLI: $ http http://localhost:8000/genres/:id/
 7. For a list of all movies
-- Browser: http://localhost:8000/movies/
-- CLI: $ http http://localhost:8000/movies/
+  - Browser: http://localhost:8000/movies/
+  - CLI: $ http http://localhost:8000/movies/
 8. For a particular movie
-- Browser: http://localhost:8000/movies/:id/
-- CLI: $ http http://localhost:8000/movies/:id/
+  - Browser: http://localhost:8000/movies/:id/
+  - CLI: $ http http://localhost:8000/movies/:id/
 9. API post requests
-- CLI: $ http -a user:password POST http://localhost:8000/genres/ name='name
-- CLI: $ http -a user:password POST http://localhost:8000/movies/ title='title' year=year genre='/genres/:id/'
+  - CLI: $ http -a user:password POST http://localhost:8000/genres/ name='name
+  - CLI: $ http -a user:password POST http://localhost:8000/movies/ title='title' year=year genre='/genres/:id/'
 * Don't forget to replace the username and password!
 10. API Put requests
-- CLI: $ http -a user:password PUT http://localhost:8000/genres/:id/ name='new_name'
-- CLI: $ http -a user:password PUT http://localhost:8000/movies/:id/ title='new_title' year=new_year genre='/genres/:id/'
+  - CLI: $ http -a user:password PUT http://localhost:8000/genres/:id/ name='new_name'
+  - CLI: $ http -a user:password PUT http://localhost:8000/movies/:id/ title='new_title' year=new_year genre='/genres/:id/'
 11. API delete requests
-- CLI: $ http -a user:password DELETE http://localhost:8000/movies/:id/
-- CLI: $ http -a user:password DELETE http://localhost:8000/genres/:id/
+  - CLI: $ http -a user:password DELETE http://localhost:8000/movies/:id/
+  - CLI: $ http -a user:password DELETE http://localhost:8000/genres/:id/
 * if you delete a genre, all movies under this genre will be deleted.
 12. Access the admin website
-- Browser: http://localhost:8000/admin/
+  - Browser: http://localhost:8000/admin/
+13. To run the tests
+  - CLI: $ python manage.py test
 
 # Tasks:
 1. Load the `movies_genres.tsv` into the Django using a SQLite database. - DONE
@@ -63,6 +66,6 @@
 8. Document as needed. - Done
 
 # Issues
-- Duplication is currently allowed. You can have several genres with the same name.
-- Genre names are case sensitive. 'History' is different than 'history.'
-- Genre detail shows a list of movies urls, not movies name.
+  - Duplication is currently allowed. You can have several genres with the same name.
+  - Genre names are case sensitive. 'History' is different than 'history.'
+  - Genre detail shows a list of movies urls, not movies name.
